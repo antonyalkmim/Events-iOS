@@ -1,0 +1,38 @@
+disabled_rules:
+  - trailing_newline
+  - trailing_whitespace
+  - line_length
+  - colon
+  - comma
+  - type_name
+  - valid_docs 
+
+opt_in_rules:
+  - variable_name
+  - empty_count
+  - force_cast
+  - force_try
+  - leading_whitespace
+  - function_body_length
+  - function_parameter_count
+  - legacy_constant
+  - operator_whitespace
+  - return_arrow_whitespace
+  - todo
+  - nesting
+
+included: # paths to include during linting. `--path` is ignored if present.
+  - Events
+
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Pods
+  - EventsTests
+  - EventsUITests
+
+identifier_name:
+  min_length: # only min_length
+    error: 4 # only error
+  excluded: # excluded via string array
+    - id
+    - URL
+    - GlobalAPIKey
