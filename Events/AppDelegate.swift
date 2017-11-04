@@ -7,15 +7,30 @@
 //
 
 import UIKit
+import Moya
+import RxSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    private(set) var networkingProvider: MoyaProvider<EventsAPI>!
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // networking
+        networkingProvider = MoyaProvider<EventsAPI>(stubClosure: MoyaProvider.immediatelyStub)
+        
+        //start coordinator
+        let appRouter = AppRouter()
+        appRouter.start()
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.backgroundColor = .white
+        window?.rootViewController = appRouter.rootController
+        window?.makeKeyAndVisible()
+        
         return true
     }
 

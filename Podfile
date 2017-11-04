@@ -9,7 +9,8 @@ target 'Events' do
   pod 'RxSwift',    '~> 4.0'
   pod 'RxCocoa',    '~> 4.0'  
   pod 'Moya/RxSwift'
-
+  pod 'RealmSwift'
+  
   target 'EventsTests' do
     inherit! :search_paths
     # Pods for testing
@@ -17,11 +18,7 @@ target 'Events' do
     pod 'RxTest',     '~> 4.0'
     pod 'Quick'
     pod 'Nimble'
-  end
-
-  target 'EventsUITests' do
-    inherit! :search_paths
-    # Pods for testing
+    pod 'RealmSwift'
   end
 
 end
