@@ -20,7 +20,6 @@ protocol SignupViewModelType {
     var viewDidLoad: PublishSubject<Void> { get }
     
     //outputs
-    var title: Observable<String> { get }
     var birthdayFormatted: Observable<String> { get }
     var presentAlertFormNotValid: PublishSubject<Void> { get }
     var presentAlertInvalidUser: PublishSubject<Void> { get }
@@ -39,6 +38,7 @@ class SignupViewModel: SignupViewModelType {
     
     private var realm: Realm!
     weak var delegate: SignupViewModelDelegate?
+    private var touchIDService = TouchIDService()
     
     //inputs
     let birthday = Variable(Date())
@@ -51,7 +51,6 @@ class SignupViewModel: SignupViewModelType {
     var viewDidLoad = PublishSubject<Void>()
     
     //outputs
-    var title: Observable<String> = .just("Signup")
     
     var birthdayFormatted: Observable<String> {
         return birthday.asObservable()
@@ -76,15 +75,22 @@ class SignupViewModel: SignupViewModelType {
         
         //has already enable login with touchID
         viewDidLoad
-            .map { _ -> Bool in
+            .flatMapLatest { _ -> Observable<Bool> in
                 let user = realm.objects(User.self).first
-                return user?.enabledLoginWithTouchId ?? false
+                return Observable<Bool>.just(user?.enabledLoginWithTouchId ?? false)
             }
-            .bind { [weak self] enabled in
-                if enabled {
-                    self?.askLoginWithTouchID.onNext(())
-                }
-            }.disposed(by: disposeBag)
+            .filter { $0 }
+            .map { _ in return Observable<Void>.just(()) }
+            .bind(to: askLoginWithTouchID)
+            .disposed(by: disposeBag)
+        
+        askLoginWithTouchID
+            .flatMapLatest { [unowned self] _ -> Observable<Bool> in return self.touchIDService.canEvaluatePolicy() }
+            .filter { $0 }
+            .flatMapLatest { [unowned self] _ -> Observable<Bool> in return self.touchIDService.evaluatePolicy(localizedReason: "Login com TouchID") }
+            .filter { $0 }
+            .bind { [weak self] _ in self?.userDidAuthenticated.onNext(()) }
+            .disposed(by: disposeBag)
         
         // is form valid
         let isFormValid = Observable.combineLatest(birthday.asObservable(), username.asObservable()) {
@@ -102,14 +108,19 @@ class SignupViewModel: SignupViewModelType {
             })
             .disposed(by: disposeBag)
         
-        // user has accepted register with touchID
-        isRegisterWithTouchIDAccepted.bind { [weak self] accepted in
-            if accepted {
-                self?.registerTouchID()
-            } else {
-                self?.userDidAuthenticated.onNext(())
+        // user has accepted/unaccepted register with touchID
+        isRegisterWithTouchIDAccepted
+            .flatMapLatest { [unowned self] (accepted) -> Observable<Bool> in
+                guard accepted else { return .just(false) }
+                return self.touchIDService
+                    .canEvaluatePolicy()
+                    .flatMapLatest { [unowned self] _ -> Observable<Bool> in
+                        return self.touchIDService.evaluatePolicy(localizedReason: "Login com TouchID")
+                    }
             }
-        }.disposed(by: disposeBag)
+            .flatMapLatest(registerTouchId)
+            .bind(to: userDidAuthenticated)
+            .disposed(by: disposeBag)
         
         //login
         loginTapped.withLatestFrom(isFormValid)
@@ -122,9 +133,9 @@ class SignupViewModel: SignupViewModelType {
             })
             .disposed(by: disposeBag)
         
-        userDidAuthenticated.bind {
-            delegate?.userDidAuthenticated()
-        }.disposed(by: disposeBag)
+        userDidAuthenticated
+            .bind { delegate?.userDidAuthenticated()}
+            .disposed(by: disposeBag)
         
     }
     
@@ -153,22 +164,15 @@ class SignupViewModel: SignupViewModelType {
         self.askEnableLoginWithTouchID.onNext(())
     }
     
-    private func registerTouchID() {
-        let context = LAContext()
-        let localizedReason = "Login com TouchID"
-        
-        if(context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)) {
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: localizedReason) { [weak self] (success, _) in
-                if success {
-                    try! self?.realm.write {
-                        let user = self?.realm.object(ofType: User.self, forPrimaryKey: self?.username.value)
-                        user?.enabledLoginWithTouchId = true
-                    }
-                    self?.userDidAuthenticated.onNext(())
-                } else {
-                    // TODO: check result LAerror
-                }
+    private func registerTouchId(accepted: Bool) -> Observable<Void> {
+        return Observable<Void>.create { [weak self] observer in
+            try! self?.realm.write {
+                let user = self?.realm.object(ofType: User.self, forPrimaryKey: self?.username.value)
+                user?.enabledLoginWithTouchId = accepted
             }
+            observer.on(.next(()))
+            observer.on(.completed)
+            return Disposables.create()
         }
     }
     

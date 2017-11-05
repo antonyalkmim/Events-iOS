@@ -37,6 +37,7 @@
 		0AE987CE1FAEB9EF00FD736D /* addEventResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AE987CD1FAEB9EF00FD736D /* addEventResponse.json */; };
 		0AE987D01FAECB5F00FD736D /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE987CF1FAECB5F00FD736D /* Date+Ext.swift */; };
 		0AE987D51FAEDB2D00FD736D /* EventKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE987D41FAEDB2D00FD736D /* EventKitService.swift */; };
+		0AFEEF001FAF7F4F00DD3B47 /* TouchIDService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFEEEFF1FAF7F4F00DD3B47 /* TouchIDService.swift */; };
 		37B83CFAF8B9FCFD0126E09A /* Pods_Events.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40F92BDE0E060E0963FE2B32 /* Pods_Events.framework */; };
 		48AE659A0A167CDE3D9D10B6 /* Pods_EventsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8598272627A1498843548062 /* Pods_EventsTests.framework */; };
 /* End PBXBuildFile section */
@@ -86,6 +87,7 @@
 		0AE987CD1FAEB9EF00FD736D /* addEventResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = addEventResponse.json; sourceTree = "<group>"; };
 		0AE987CF1FAECB5F00FD736D /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		0AE987D41FAEDB2D00FD736D /* EventKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventKitService.swift; sourceTree = "<group>"; };
+		0AFEEEFF1FAF7F4F00DD3B47 /* TouchIDService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchIDService.swift; sourceTree = "<group>"; };
 		336DA56FA433B9E6F9D10AE9 /* Pods_EventsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EventsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		40F92BDE0E060E0963FE2B32 /* Pods_Events.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Events.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		519538C067570A111741E7C0 /* Pods-EventsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EventsTests/Pods-EventsTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				0AE987D41FAEDB2D00FD736D /* EventKitService.swift */,
+				0AFEEEFF1FAF7F4F00DD3B47 /* TouchIDService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -596,6 +599,7 @@
 				0A28195A1FAD0D94000CF871 /* EventsAPI.swift in Sources */,
 				0ACC09ED1FACA0CE003CE631 /* SignupViewController.swift in Sources */,
 				0ACC09EB1FACA0CE003CE631 /* AppDelegate.swift in Sources */,
+				0AFEEF001FAF7F4F00DD3B47 /* TouchIDService.swift in Sources */,
 				0A69831A1FAE466300BE0942 /* EventListViewModel.swift in Sources */,
 				0A69831C1FAE48C900BE0942 /* UITableView+Ext.swift in Sources */,
 				0A6983201FAE539200BE0942 /* EventCellViewModel.swift in Sources */,

@@ -128,6 +128,7 @@ extension SignupViewController: ViewConfiguration {
             navigationController?.navigationItem.largeTitleDisplayMode = .never
             navigationItem.hidesSearchBarWhenScrolling = false
         }
+        navigationItem.title = "Signup"
     }
     
 }
@@ -166,9 +167,6 @@ extension SignupViewController {
     }
     
     private func bindOutputs() {
-        viewModel.title.bind(to: navigationItem.rx.title)
-            .disposed(by: disposeBag)
-        
         viewModel.birthdayFormatted
             .bind(to: dateField.rx.text)
             .disposed(by: disposeBag)
