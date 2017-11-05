@@ -43,7 +43,10 @@ This app conforms to [**MVVM** (Model-View-ViewModel)](https://en.wikipedia.org/
 ## TODO
 
 - [ ] Remove `IQKeyboardManagerSwift` dependency
-- [ ] Write more tests
+- [ ] Add more tests
+- [ ] Add UI tests
+- [ ] Add L10n
+- [ ] Add A11n
 - [ ] Add any CI
 
 # License
