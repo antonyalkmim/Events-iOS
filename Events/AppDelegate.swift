@@ -9,6 +9,7 @@
 import UIKit
 import Moya
 import RxSwift
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private(set) var networkingProvider: MoyaProvider<EventsAPI>!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        IQKeyboardManager.sharedManager().enable = true
         
         // networking
         networkingProvider = MoyaProvider<EventsAPI>(stubClosure: MoyaProvider.immediatelyStub)

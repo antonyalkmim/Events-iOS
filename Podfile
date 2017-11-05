@@ -11,6 +11,7 @@ target 'Events' do
   pod 'Moya/RxSwift'
   pod 'RealmSwift'
   pod 'RxDataSources', '~> 3.0'
+  pod 'IQKeyboardManagerSwift'
   
   target 'EventsTests' do
     inherit! :search_paths

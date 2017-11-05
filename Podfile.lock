@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (4.5.1)
   - Differentiator (3.0.1)
+  - IQKeyboardManagerSwift (5.0.4)
   - Moya/Core (10.0.0):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
@@ -28,6 +29,7 @@ PODS:
     - RxSwift (~> 4.0)
 
 DEPENDENCIES:
+  - IQKeyboardManagerSwift
   - Moya/RxSwift
   - Nimble
   - Quick
@@ -41,6 +43,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   Differentiator: ffe513ce1ea4e7198b89fac94d6e281c673055a9
+  IQKeyboardManagerSwift: a0592bb636b10a9a1cf75d2b2c61144226226c84
   Moya: adb58b0f4e58430db43cc6e2f6ebab1836501186
   Nimble: bfe1f814edabba69ff145cb1283e04ed636a67f2
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
@@ -53,6 +56,6 @@ SPEC CHECKSUMS:
   RxSwift: fd680d75283beb5e2559486f3c0ff852f0d35334
   RxTest: 0041e792cede35e53e4749f378d21482af0e9d12
 
-PODFILE CHECKSUM: 4d8b1e616b242449ea3606b34358ed2fc9fba220
+PODFILE CHECKSUM: 970b25ec3ed0a2deb2824914343e71f77e703aeb
 
 COCOAPODS: 1.3.1
