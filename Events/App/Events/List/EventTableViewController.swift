@@ -104,12 +104,12 @@ extension EventsTableViewController {
         return Observable<Bool>.create { [weak self] observer -> Disposable in
             let alert = UIAlertController(title: "Atenção", message: "Deseja remover evento do calendário?", preferredStyle: .alert)
             
-            let okAction = UIAlertAction(title: "Confirmar", style: .destructive) { _ in
+            let okAction = UIAlertAction(title: "Remover", style: .destructive) { _ in
                 observer.on(.next(true))
                 observer.on(.completed)
             }
             
-            let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel) { _ in
+            let cancelAction = UIAlertAction(title: "Não", style: .cancel) { _ in
                 observer.on(.next(false))
                 observer.on(.completed)
             }
