@@ -64,7 +64,7 @@ class EventAddViewController: UIViewController {
     public lazy var addButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Adicionar", for: .normal)
+        button.setTitle("Adicionar Evento", for: .normal)
         button.setTitleColor(.gray, for: .normal)
         button.setTitleColor(.lightGray, for: .highlighted)
         button.layer.cornerRadius = 6
