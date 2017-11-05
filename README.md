@@ -29,6 +29,12 @@ This app conforms to [**MVVM** (Model-View-ViewModel)](https://en.wikipedia.org/
 - [Quick](https://github.com/Quick/Quick) for tests
 - [Nimble](https://github.com/Quick/Nimble) to tests assets
 
+### TODO
+
+- [ ] Remove `IQKeyboardManagerSwift` dependency
+- [ ] Write more tests
+- [ ] Add any CI
+
 # License
 ----
 
