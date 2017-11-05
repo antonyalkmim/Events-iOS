@@ -9,6 +9,7 @@
 import RxSwift
 import RealmSwift
 import Moya
+import EventKit
 
 protocol EventAddViewModelType {
     //inputs
@@ -35,6 +36,7 @@ class EventAddViewModel: EventAddViewModelType {
     // MARK: - Privates
     private var disposeBag = DisposeBag()
     
+    private let eventService = EventKitService()
     private var networkingProvider: MoyaProvider<EventsAPI>!
     private var realm: Realm!
     weak var delegate: EventAddViewModelDelegate?
@@ -143,9 +145,11 @@ extension EventAddViewModel {
     }
     
     private func addCalendarEvent() {
-        if let eventSaved = event.value {
-            
-            finishAddingNewEvent.onNext(())
+        if let about = event.value?.about, let date = event.value?.date {
+            eventService
+                .addEvent(title: about, when: date)
+                .bind(to: finishAddingNewEvent)
+                .disposed(by: disposeBag)
         }
     }
 }

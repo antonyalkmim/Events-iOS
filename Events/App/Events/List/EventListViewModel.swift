@@ -34,7 +34,7 @@ class EventListViewModel: EventListViewModelType {
     private var disposeBag = DisposeBag()
     weak var delegate: EventListViewModelDelegate?
     private var realm: Realm!
-    private let eventStore = EKEventStore()
+    private let eventService = EventKitService()
     
     private var token: NotificationToken?
     
@@ -87,11 +87,21 @@ extension EventListViewModel {
     private func deleteEvent(forIndex index: Int, deleteFromCalendar: Bool) {
         let event = events.value[index]
         
-        if deleteFromCalendar {
-            //TODO: delete from calendar
-        }
+        Observable.combineLatest(Observable.just(deleteFromCalendar), eventService.getEvents(forDate: event.date))
+            .flatMapLatest { deleteFromCalendar, events -> Observable<Void> in
+                guard deleteFromCalendar else { return Observable<Void>.just(()) }
+                
+                if let registeredEventCalendar = events.filter({ $0.title == event.about }).first {
+                    return self.eventService.removeEvent(identifier: registeredEventCalendar.eventIdentifier)
+                } else {
+                    return Observable<Void>.just(())
+                }
+            }
+            .subscribe(onNext: { [unowned self] in
+                try! self.realm.write { self.realm.delete(event) }
+                self.events.value = self.realm.objects(Event.self).map { $0 }
+            })
+            .disposed(by: disposeBag)
         
-        try! realm.write { realm.delete(event) }
-        events.value = realm.objects(Event.self).map { $0 }
     }
 }
