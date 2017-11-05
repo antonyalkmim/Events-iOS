@@ -117,7 +117,30 @@ class SignupViewModelTests: QuickSpec {
                     expect(user.enabledLoginWithTouchId) == false
                 }
                 
-                context("and user registered") {
+                context("and new user registered") {
+                    
+                    it("should clear events") {
+                        let event = Events.Event(value: ["about" : "Lorem", "date": Date()])
+                        try! testRealm.write { testRealm.add(event) }
+                        
+                        vm.signupTapped.onNext(())
+                        
+                        let eventsRegistered = testRealm.objects(Events.Event.self)
+                        expect(eventsRegistered.count) == 0
+                    }
+                    
+                    it("should authenticate") {
+                        var didAuthenticated = false
+                        
+                        vm.userDidAuthenticated.subscribe(onNext: {
+                            didAuthenticated = true
+                        }).disposed(by: disposeBag)
+                        
+                        vm.signupTapped.onNext(())
+                        vm.isRegisterWithTouchIDAccepted.onNext(false)
+                        
+                        expect(didAuthenticated) == true
+                    }
                     
                     it("should ask user to enable login with touchID") {
                         var askedForTouchID: Bool = false

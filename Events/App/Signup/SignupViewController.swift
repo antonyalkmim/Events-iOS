@@ -154,6 +154,7 @@ extension SignupViewController {
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)
     }
+    
 }
 
 // MARK: - Rx Bindings
@@ -178,6 +179,10 @@ extension SignupViewController {
         
         viewModel.askEnableLoginWithTouchID.bind { [weak self] in
             self?.askForRegisterTouchID()
+        }.disposed(by: disposeBag)
+        
+        viewModel.presentAlertInvalidUser.bind { [weak self] in
+            self?.presentAlertFormNotValid()
         }.disposed(by: disposeBag)
         
     }

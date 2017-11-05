@@ -107,7 +107,7 @@ class SignupViewModel: SignupViewModelType {
             if accepted {
                 self?.registerTouchID()
             } else {
-                
+                self?.userDidAuthenticated.onNext(())
             }
         }.disposed(by: disposeBag)
         
@@ -129,7 +129,9 @@ class SignupViewModel: SignupViewModelType {
     }
     
     private func authenticateUser() {
-        if realm.object(ofType: User.self, forPrimaryKey: username.value) != nil {
+        let user = realm.object(ofType: User.self, forPrimaryKey: username.value)
+        
+        if user != nil && user!.birthday.isSameDay(of: birthday.value) {
             self.userDidAuthenticated.onNext(())
         } else {
             self.presentAlertInvalidUser.onNext(())
@@ -144,7 +146,7 @@ class SignupViewModel: SignupViewModelType {
         ])
         
         try! realm.write {
-            realm.delete(realm.objects(User.self))
+            realm.deleteAll()
             realm.add(user)
         }
         
