@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import Moya
 
 class AppRouter: CoordinatorType {
     
@@ -17,6 +18,9 @@ class AppRouter: CoordinatorType {
     
     private var navigationController : UINavigationController!
     
+    private var networkingProvider: MoyaProvider<EventsAPI> {
+        return appDelegate().networkingProvider
+    }
     private let realm = try! Realm()
     
     func start() {
@@ -54,7 +58,7 @@ extension AppRouter: SignupViewModelDelegate {
 // MARK: - EventListViewModelDelegate
 extension AppRouter: EventListViewModelDelegate {
     func addNewEvent() {
-        let viewModel = EventAddViewModel(delegate: self, realm: realm)
+        let viewModel = EventAddViewModel(delegate: self, networkingProvider: networkingProvider, realm: realm)
         let vc = EventAddViewController(viewModel: viewModel)
         navigationController.pushViewController(vc, animated: true)
     }

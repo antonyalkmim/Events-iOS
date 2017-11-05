@@ -12,6 +12,10 @@ enum EventsAPI {
     case addEvent(event: Event)
 }
 
+struct EventsAPIResponse: Decodable {
+    let status: Bool
+    let message: String
+}
 
 extension EventsAPI: TargetType {
     
@@ -43,7 +47,7 @@ extension EventsAPI: TargetType {
     var sampleData: Data {
         switch self {
         case .addEvent(_):
-            return stubbedResponse("listPromotions")
+            return stubbedResponse("addEventResponse")
         }
     }
     

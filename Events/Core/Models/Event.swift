@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class Event: Object {
+class Event: Object, Decodable {
     @objc dynamic var eventID = UUID().uuidString
     @objc dynamic var about = ""
     @objc dynamic var date = Date()
@@ -22,3 +22,4 @@ class Event: Object {
         return "\(about)\(date)"
     }
 }
+
