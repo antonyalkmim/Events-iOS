@@ -85,23 +85,26 @@ class EventListViewModel: EventListViewModelType {
 // MARK: - Actions
 extension EventListViewModel {
     private func deleteEvent(forIndex index: Int, deleteFromCalendar: Bool) {
+        
         let event = events.value[index]
+        let eventTitle = event.about
+        let eventDate = event.date
         
-        Observable.combineLatest(Observable.just(deleteFromCalendar), eventService.getEvents(forDate: event.date))
-            .flatMapLatest { deleteFromCalendar, events -> Observable<Void> in
-                guard deleteFromCalendar else { return Observable<Void>.just(()) }
-                
-                if let registeredEventCalendar = events.filter({ $0.title == event.about }).first {
-                    return self.eventService.removeEvent(identifier: registeredEventCalendar.eventIdentifier)
-                } else {
-                    return Observable<Void>.just(())
+        if deleteFromCalendar {
+            eventService.getEvents(forDate: eventDate)
+                .flatMapLatest { events -> Observable<Void> in
+                    if let registeredEventCalendar = events.filter({ $0.title == eventTitle }).first {
+                        return self.eventService.removeEvent(identifier: registeredEventCalendar.eventIdentifier)
+                    } else {
+                        return Observable<Void>.just(())
+                    }
                 }
-            }
-            .subscribe(onNext: { [unowned self] in
-                try! self.realm.write { self.realm.delete(event) }
-                self.events.value = self.realm.objects(Event.self).map { $0 }
-            })
-            .disposed(by: disposeBag)
+                .subscribe()
+                .disposed(by: disposeBag)
+            
+        }
         
+        try! self.realm.write { self.realm.delete(event) }
+        self.events.value = self.realm.objects(Event.self).map { $0 } 
     }
 }
