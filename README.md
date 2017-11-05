@@ -4,6 +4,12 @@ An iOS app that lets you register Events.
 
 ---- 
 
+## Screenshots 
+ 
+![Signup](.github/signup.png) 
+![Signup TouchID](.github/signup_touchid.png) 
+![Events list](.github/events.png) 
+
 ## Features
 - Authentication with TouchID
 - Register events locally
