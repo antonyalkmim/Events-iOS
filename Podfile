@@ -10,6 +10,7 @@ target 'Events' do
   pod 'RxCocoa',    '~> 4.0'  
   pod 'Moya/RxSwift'
   pod 'RealmSwift'
+  pod 'RxDataSources', '~> 3.0'
   
   target 'EventsTests' do
     inherit! :search_paths

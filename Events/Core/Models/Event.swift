@@ -10,6 +10,15 @@ import Foundation
 import RealmSwift
 
 class Event: Object {
+    @objc dynamic var eventID = UUID().uuidString
     @objc dynamic var about = ""
     @objc dynamic var date = Date()
+    
+    override static func primaryKey() -> String? {
+        return "eventID"
+    }
+    
+    func identifier() -> String {
+        return "\(about)\(date)"
+    }
 }

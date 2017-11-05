@@ -17,6 +17,8 @@ class AppRouter: CoordinatorType {
     
     private var navigationController : UINavigationController!
     
+    private let realm = try! Realm()
+    
     func start() {
         presentSignup()
     }
@@ -27,13 +29,15 @@ class AppRouter: CoordinatorType {
 extension AppRouter {
     
     private func presentSignup() {
-        let viewModel = SignupViewModel(delegate: self, realm: try! Realm())
+        let viewModel = SignupViewModel(delegate: self, realm: realm)
         let vc = SignupViewController(viewModel: viewModel)
         navigationController = UINavigationController(rootViewController: vc)
     }
     
     private func presentEventsList() {
-        
+        let viewModel = EventListViewModel(delegate: self, realm: realm)
+        let vc = EventsTableViewController(viewModel: viewModel)
+        navigationController.setViewControllers([vc], animated: true)
     }
     
 }
@@ -45,4 +49,20 @@ extension AppRouter: SignupViewModelDelegate {
         presentEventsList()
     }
     
+}
+
+// MARK: - EventListViewModelDelegate
+extension AppRouter: EventListViewModelDelegate {
+    func addNewEvent() {
+        let viewModel = EventAddViewModel(delegate: self, realm: realm)
+        let vc = EventAddViewController(viewModel: viewModel)
+        navigationController.pushViewController(vc, animated: true)
+    }
+}
+
+// MARK: - EventAddViewModelDelegate
+extension AppRouter: EventAddViewModelDelegate {
+    func newEventInserted() {
+        navigationController.popViewController(animated: true)
+    }
 }
