@@ -8,6 +8,7 @@ An app that lets you register Events.
 1. Xcode 9.
 2. Swift 4.
 3. Cocoapods version `1.3.1`
+4. [SwiftLint](https://github.com/realm/SwiftLint) version `0.23.1`
 
 ### Getting Started
 1. Clone this repository
