@@ -1,5 +1,7 @@
 # Events-iOS
 
+[![Build Status](https://www.bitrise.io/app/9595081e470caedc/status.svg?token=06DwCaTohg8HsPlIeOfgFA&branch=master)](https://www.bitrise.io/app/9595081e470caedc)
+
 An iOS app that lets you register Events.
 
 ---- 
