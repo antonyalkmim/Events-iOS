@@ -1,5 +1,6 @@
 # Events-iOS
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4f16bea8f76e45af8e0a9c98462a231b)](https://www.codacy.com/app/antonyalkmim/Events-iOS?utm_source=github.com&utm_medium=referral&utm_content=antonyalkmim/Events-iOS&utm_campaign=badger)
 [![Build Status](https://www.bitrise.io/app/9595081e470caedc/status.svg?token=06DwCaTohg8HsPlIeOfgFA&branch=master)](https://www.bitrise.io/app/9595081e470caedc)
 [![codecov](https://codecov.io/gh/antonyalkmim/Events-iOS/branch/master/graph/badge.svg)](https://codecov.io/gh/antonyalkmim/Events-iOS)
 
