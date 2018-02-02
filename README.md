@@ -51,6 +51,7 @@ This app conforms to [**MVVM** (Model-View-ViewModel)](https://en.wikipedia.org/
 - [ ] Add UI tests
 - [ ] Add L10n
 - [ ] Add A11n
+- [ ] Add Code Coverage
 
 # License
 ----
